@@ -7,9 +7,8 @@ telegram_bot = 'your_telegran_bot_token'
 telegram_id = 'your_telegran_bot_id'
 min_threshold = int(sys.argv[3])
 max_threshold = int(sys.argv[4])
-time_interval = 9 * 60 # in seconds
+time_interval = 9 * 60 # 9 time 60 SECONDS
 track_currency = f"https://api.kraken.com/0/public/Ticker?pair={(which_crypto+which_currency)}"
-
 
 print("This process has the PID", os.getpid())
 
@@ -33,7 +32,7 @@ def telegram_message(telegram_id, msg):
     """Send message to telegram"""
     url = f"https://api.telegram.org/bot{telegram_bot}/sendMessage?chat_id={telegram_id}&text={msg}"
 
-    # send the msg
+    # send message
     urlopen(url).read()
 
 def main ():
@@ -43,9 +42,9 @@ def main ():
         currency_last_price = int(get_price("a",0))
         last_price_list.append(currency_last_price)
 
-        if currency_last_price < min_threshold:
+        if currency_last_price <= min_threshold:
             telegram_message(telegram_id=telegram_id, msg=f'/!\%20DUMP%20ALERT,%20{which_crypto.upper()}:%20{currency_last_price}')
-        elif currency_last_price > max_threshold:
+        elif currency_last_price >= max_threshold:
             telegram_message(telegram_id=telegram_id, msg=f'/!\%20PUMP%20ALERT,%20{which_crypto.upper()}:%20{currency_last_price}')
 
         if len(last_price_list) >= 10:
