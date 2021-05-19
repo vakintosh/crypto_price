@@ -49,4 +49,4 @@ def main ():
 if __name__ == '__main__':
     main()
 
-#TO DO : CHECK SINCE WHEN THE PRICE IS LOW 
+#TO DO : use argparse rather than manually parsing the arguments. Put these pieces in the if __name__ == "__main__": section so that others could take this module and use it as an import rather than only as a module
