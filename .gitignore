@@ -3,3 +3,4 @@ lib
 bin
 .DS_Store
 pyvenv.cfg
+test_1.py
