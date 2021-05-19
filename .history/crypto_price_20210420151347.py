@@ -1,4 +1,5 @@
-import requests,time,sys,os
+from urllib.request import urlopen
+import ast,time,sys,os
 
 which_crypto = str(sys.argv[1]).lower()
 which_currency = str(sys.argv[2]).lower()
@@ -6,16 +7,24 @@ telegram_bot = 'your_telegran_bot_token'
 telegram_id = 'your_telegran_bot_id'
 min_threshold = int(sys.argv[3])
 max_threshold = int(sys.argv[4])
-time_interval = 9 * 60 # 9 time 60 SECONDS
+time_interval = 9 * 60 # in seconds
 track_currency = f"https://api.kraken.com/0/public/Ticker?pair={(which_crypto+which_currency)}"
+
 
 print("This process has the PID", os.getpid())
 
-def get_price():
+def convert_to_dict(link):
+    """CONVERT TO DICT THE DATA FROM @KRAKEN"""
+    f = urlopen(link)
+    data_link = f.read()
+    data_decode = data_link.decode("UTF-8")
+    currency = ast.literal_eval(data_decode)
+    return currency
+
+def get_price(letter,number):
     """GET THE PRICE OF THE CHOOSEN CURRENCY"""
-    r = requests.get(f"https://api.kraken.com/0/public/Ticker?pair={(which_crypto+which_currency)}")
-    data = r.json()
-    currency_name = data["result"]
+    currency_choosen = convert_to_dict(track_currency)
+    currency_name = currency_choosen["result"]
     coin_name = list(currency_name.keys())[0]
     price = currency_name[f"{coin_name}"]["a"][0]
     return price.split('.')[0]
@@ -24,8 +33,8 @@ def telegram_message(telegram_id, msg):
     """Send message to telegram"""
     url = f"https://api.telegram.org/bot{telegram_bot}/sendMessage?chat_id={telegram_id}&text={msg}"
 
-    # send the msg
-    requests.get(url)
+    # send message
+    urlopen(url).read()
 
 def main ():
     last_price_list = []
