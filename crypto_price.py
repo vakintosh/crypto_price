@@ -31,7 +31,7 @@ def main ():
     last_price_list = []
 
     while True:
-        currency_last_price = int(get_price("a",0))
+        currency_last_price = int(get_price())
         last_price_list.append(currency_last_price)
 
         if currency_last_price <= min_threshold:
