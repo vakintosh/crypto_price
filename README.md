@@ -2,6 +2,6 @@ This script allow you to track any crypto price (from Kraken platform) using the
 All you need is a telegram account and a bot created with @Botfather.
 
 To use it, you need to parse arguments when running the script :
-    "python crypto_price.py BTC USD MinThreshold MaxTreshold &"
+    "python crypto_price.py DOGE USD MinThreshold MaxTreshold &"
 
 It return the PID in case you need to kiil it.
